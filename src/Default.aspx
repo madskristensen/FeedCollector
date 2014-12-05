@@ -7,6 +7,7 @@
     <title>ASP.NET Blogs and Videos</title>
     <link href="site.css" rel="stylesheet" />
     <meta name="description" content="News articles and videos from the ASP.NET and Visual Studio Web Team" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 <body>
 
