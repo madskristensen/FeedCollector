@@ -10,6 +10,7 @@ public partial class _Default : System.Web.UI.Page
 {
     private string _feed = ConfigurationManager.AppSettings.Get("feed");
     private static XDocument _cache;
+    private const int _items = 30;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -22,7 +23,7 @@ public partial class _Default : System.Web.UI.Page
         var source = new List<FeedItem>();
         var items = _cache.XPathSelectElements("//item");
 
-        foreach (XElement item in items.Take(20))
+        foreach (XElement item in items.Take(_items))
         {
             string title = GetString(item, "title");
             string content = GetString(item, "description");
