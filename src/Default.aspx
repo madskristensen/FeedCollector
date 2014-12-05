@@ -36,8 +36,8 @@
 
     <footer>
         <p>
-            Copyright &copy; 2014 Mads Kristensen<br />
-            <a href="http://github.com/madskristensen/webdevblogs">Contribute on GitHub</a>
+            <a href="http://github.com/madskristensen/webdevblogs">Contribute on GitHub</a><br />
+            Copyright &copy; 2014 <a href="http://madskristensen.net" rel="me">Mads Kristensen</a>
         </p>
     </footer>
 </body>
