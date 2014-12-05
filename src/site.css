@@ -1,0 +1,80 @@
+﻿body {
+    font: 1em/1.3 "trebuchet ms";
+    padding: 0;
+    margin: 0;
+}
+
+h2 {
+    font-size: 1.3em;
+    margin-bottom: 5px;
+}
+
+header {
+    text-align: center;
+    font-size: 1.3em;
+}
+
+div[role=main] {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 1em;
+}
+
+article {
+    position: relative;
+    padding-left: 75px;
+    margin-bottom: 2em;
+}
+
+    article span {
+        display: block;
+    }
+
+time {
+    position: absolute;
+    left: 0;
+    top: 5px;
+    border-radius: 5px;
+    border: 1px solid #333;
+    text-align: center;
+    width: 50px;
+    font-weight: bold;
+}
+
+    time span {
+        padding: 3px;
+    }
+
+    time .month {
+        background-color: darkcyan;
+        color: white;
+        border-radius: 4px 4px 0 0;
+    }
+
+footer p {
+    text-align: center;
+    padding: 1em 0;
+    margin: 3em 0 0 0;
+    background: #333;
+    color: white;
+}
+
+@media only screen and (max-width: 600px) {
+    article {
+        padding-left: 0;
+    }
+
+    time {
+        border: none;
+        width: auto;
+        position: relative;
+    }
+
+        time:after {
+            content: attr(datetime);
+        }
+
+        time span {
+            display: none;
+        }
+}
