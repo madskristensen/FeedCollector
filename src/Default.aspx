@@ -24,11 +24,7 @@
                     </time>
 
                     <h2><%# Item.Title %></h2>
-                    <span>By <%# Item.Author %></span>
-
-                    <p>
-                        <%# Item.Content %>
-                    </p>
+                    <p><%# Item.Content %></p>
 
                     <a href="<%# Item.Url %>">Read the article</a>
                     <em style="background-image: url('<%#Item.Url.Scheme + "://" + Item.Url.Host + "/favicon.ico" %>')"></em>

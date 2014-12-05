@@ -26,10 +26,6 @@ article {
     margin-bottom: 2em;
 }
 
-    article span {
-        display: block;
-    }
-
     article em {
         height: 16px;
         width: 16px;
@@ -52,6 +48,7 @@ time {
 
     time span {
         padding: 3px;
+        display: block;
     }
 
     time .month {
