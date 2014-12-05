@@ -27,7 +27,7 @@ public partial class _Default : System.Web.UI.Page
             string content = GetString(item, "description");
             Uri url = new Uri(GetString(item, "link"));
             DateTime published = DateTime.Parse(GetString(item, "pubDate"));
-            string author = GetString(item, "author", "The Team");
+            string author = GetString(item, "author", "a community member");
 
             Regex regex = new Regex("<[^>]*>", RegexOptions.Compiled);
             content = regex.Replace(content, string.Empty);

@@ -31,6 +31,7 @@
                     </p>
 
                     <a href="<%# Item.Url %>">Read the article</a>
+                    <em style="background-image: url('<%#Item.Url.Scheme + "://" + Item.Url.Host + "/favicon.ico" %>')"></em>
                 </article>
             </ItemTemplate>
         </asp:Repeater>

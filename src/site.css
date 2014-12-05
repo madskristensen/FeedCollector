@@ -30,6 +30,15 @@ article {
         display: block;
     }
 
+    article em {
+        height: 16px;
+        width: 16px;
+        margin-left: 5px;
+        display: inline-block;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
 time {
     position: absolute;
     left: 0;
