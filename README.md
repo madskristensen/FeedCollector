@@ -1,5 +1,7 @@
 # ASP.NET and Web Tools News
 
+Website: [webdevblogs.azurewebsites.net](http://webdevblogs.azurewebsites.net/)
+
 Keep yourself up to speed with everything ASP.NET and Visual Studio web tooling.
 
 This website aggregates the activities such as blog posts, Youtube videos an more from the 
