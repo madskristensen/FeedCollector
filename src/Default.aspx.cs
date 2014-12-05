@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Text.RegularExpressions;
@@ -21,7 +22,7 @@ public partial class _Default : System.Web.UI.Page
         var source = new List<FeedItem>();
         var items = _cache.XPathSelectElements("//item");
 
-        foreach (XElement item in items)
+        foreach (XElement item in items.Take(20))
         {
             string title = GetString(item, "title");
             string content = GetString(item, "description");

@@ -28,9 +28,11 @@ article {
 }
 
     article em {
-        height: 16px;
-        width: 16px;
-        margin-left: 5px;
+        height: 20px;
+        width: 20px;
+        position: relative;
+        top: 3px;
+        left: 5px;
         display: inline-block;
         background-repeat: no-repeat;
         background-size: cover;
@@ -64,21 +66,26 @@ footer p {
     margin: 3em 0 0 0;
     background: #333;
     color: white;
+    line-height: 1.7
+}
+
+footer p a {
+    color: #fff;
 }
 
 @media screen and (orientation: landscape) {
     @-ms-viewport {
-        width: 800px;
+        width: device-width;
     }
 }
 
 @media screen and (orientation: portrait) {
     @-ms-viewport {
-        width: 680px;
+        width: 800px;
     }
 
     div[role=main] {
-        -ms-text-size-adjust: 150%;
+        -ms-text-size-adjust: 160%;
     }
 }
 

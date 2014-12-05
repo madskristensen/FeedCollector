@@ -35,7 +35,10 @@
     </div>
 
     <footer>
-        <p>Copyright &copy; 2014 Mads Kristensen</p>
+        <p>
+            Copyright &copy; 2014 Mads Kristensen<br />
+            <a href="http://github.com/madskristensen/webdevblogs">Contribute on GitHub</a>
+        </p>
     </footer>
 </body>
 </html>
