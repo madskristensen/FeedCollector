@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" Async="true" CodeFile="Default.aspx.cs" Inherits="_Default" %>
-<%@ OutputCache Duration="86400" VaryByParam="none" %>
+<%@ OutputCache Duration="7200" VaryByParam="none" %>
 <%@ Import Namespace="System.Configuration" %>
 
 <!doctype html>
@@ -22,19 +22,19 @@
         <a href="/feed.rss">
             <img src="rss.png" alt="Subscibe to the RSS feed" />
         </a>
-        <asp:Repeater runat="server" ID="rep" ItemType="FeedItem">
+        <asp:Repeater runat="server" ID="rep" ItemType="System.ServiceModel.Syndication.SyndicationItem" SelectMethod="rep_GetData">
             <ItemTemplate>
                 <article>
-                    <time datetime="<%# Item.Published.ToString("yyyy-MM-dd HH:mm") %>">
-                        <span class="month"><%# Item.Published.ToString("MMM") %></span>
-                        <span class="day"><%# Item.Published.Day %></span>
+                    <time datetime="<%# Item.PublishDate.ToString("yyyy-MM-dd HH:mm") %>">
+                        <span class="month"><%# Item.PublishDate.ToString("MMM") %></span>
+                        <span class="day"><%# Item.PublishDate.Day %></span>
                     </time>
 
-                    <h2><%# Item.Title %></h2>
-                    <p><%# Item.Content %></p>
+                    <h2><%# Item.Title.Text %></h2>
+                    <p><%# Item.Summary.Text %></p>
 
-                    <a href="<%# Item.Url %>">Read the article</a>
-                    <em style="background-image: url('<%#Item.Url.Scheme + "://" + Item.Url.Host + "/favicon.ico" %>')"></em>
+                    <a href="<%# Item.Links[0].Uri %>">Read the article</a>
+                    <em style="background-image: url('<%#Item.Links[0].Uri.Scheme + "://" + Item.Links[0].Uri.Host + "/favicon.ico" %>')"></em>
                 </article>
             </ItemTemplate>
         </asp:Repeater>

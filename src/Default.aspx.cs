@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.ServiceModel.Syndication;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.Hosting;
 using System.Web.UI;
@@ -12,33 +13,19 @@ using config = System.Configuration.ConfigurationManager;
 
 public partial class _Default : Page
 {
-    private static readonly int _items = int.Parse(config.AppSettings["visibleitems"]);
-    private string _file = HostingEnvironment.MapPath("~/feed.rss");
+    private static int _items = int.Parse(config.AppSettings["visibleitems"]);
+    private static string _file = HostingEnvironment.MapPath("~/feed.rss");
+    private static Regex _regex = new Regex("<[^>]*>", RegexOptions.Compiled);
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (File.Exists(_file))
-        {
-            using (XmlReader reader = XmlReader.Create(_file))
-            {
-                SyndicationFeed feed = SyndicationFeed.Load(reader);
-                Bind(feed);
-            }
+        Task task = Task.Run(() => DownloadFeeds());
 
-            // Download feeds in the background if "_file" is older than 1 hour
-            if (File.GetLastWriteTimeUtc(_file) < DateTime.UtcNow.AddHours(-1))
-                Task.Run(() => DownloadFeeds());
-        }
-        else
-        {
-            RegisterAsyncTask(new PageAsyncTask(async () => {
-                var feed = await DownloadFeeds();
-                Bind(feed);
-            }));
-        }
+        if (!File.Exists(_file))
+            task.Wait();
     }
 
-    private async Task<SyndicationFeed> DownloadFeeds()
+    private async Task DownloadFeeds()
     {
         var keys = config.AppSettings.AllKeys.Where(key => key.StartsWith("feed:"));
         var list = new List<SyndicationItem>();
@@ -56,10 +43,20 @@ public partial class _Default : Page
         // Dedupe and order list of items
         list = list.GroupBy(i => i.Title.Text).Select(i => i.First()).OrderByDescending(i => i.PublishDate.Date).ToList();
 
-        return CreateFeed(list);
+        foreach (SyndicationItem item in list)
+        {
+            string author = item.Authors.Any() ? item.Authors[0].Name : string.Empty;
+            string content = item.Summary != null ? item.Summary.Text : item.Content.ToString();
+            content = _regex.Replace(content, string.Empty); // Strips out HTML
+
+            item.Authors.Add(new SyndicationPerson(null, author, null));
+            item.Summary = new TextSyndicationContent(content.Substring(0, Math.Min(300, content.Length)) + "...");
+        }
+
+        CreateFeed(list);
     }
 
-    private SyndicationFeed CreateFeed(IEnumerable<SyndicationItem> list)
+    private void CreateFeed(IEnumerable<SyndicationItem> list)
     {
         SyndicationFeed rss = new SyndicationFeed(config.AppSettings["title"], config.AppSettings["description"], null, list);
 
@@ -67,13 +64,13 @@ public partial class _Default : Page
         {
             rss.SaveAsRss20(writer);
         }
-
-        return rss;
     }
 
-    private void Bind(SyndicationFeed feed)
+    public IEnumerable<SyndicationItem> rep_GetData()
     {
-        rep.DataSource = feed.Items.Take(_items).Select(i => FeedItem.FromSyndicationItem(i));
-        rep.DataBind();
+        using (XmlReader reader = XmlReader.Create(_file))
+        {
+            return SyndicationFeed.Load(reader).Items;
+        }
     }
 }
