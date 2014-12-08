@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" Async="true" CodeFile="Default.aspx.cs" Inherits="_Default" %>
 <%@ OutputCache Duration="86400" VaryByParam="none" %>
 
 <!doctype html>
@@ -16,12 +16,12 @@
     </header>
 
     <div role="main">
-        <asp:Repeater runat="server" ID="rep" ItemType="FeedItem" SelectMethod="rep_GetData">
+        <asp:Repeater runat="server" ID="rep" ItemType="FeedItem">
             <ItemTemplate>
                 <article>
                     <time datetime="<%# Item.Published.ToString("yyyy-MM-dd HH-mm") %>">
                         <span class="month"><%# Item.Published.ToString("MMM") %></span>
-                        <span class="day"><%# Item.Published.ToString("dd") %></span>
+                        <span class="day"><%# Item.Published.Day %></span>
                     </time>
 
                     <h2><%# Item.Title %></h2>

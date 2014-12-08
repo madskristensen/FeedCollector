@@ -1,53 +1,56 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
+using System.Net;
+using System.ServiceModel.Syndication;
 using System.Text.RegularExpressions;
-using System.Xml.Linq;
-using System.Xml.XPath;
+using System.Threading.Tasks;
+using System.Web.UI;
+using System.Xml;
 
-public partial class _Default : System.Web.UI.Page
+public partial class _Default : Page
 {
-    private string _feed = ConfigurationManager.AppSettings.Get("feed");
-    private static XDocument _cache;
-    private const int _items = 30;
+    private static readonly int _items = int.Parse(ConfigurationManager.AppSettings.Get("visibleitems"));
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (_cache == null)
-            _cache = XDocument.Load(_feed);
+        RegisterAsyncTask(new PageAsyncTask(GetFeedItems));
     }
 
-    public IEnumerable<FeedItem> rep_GetData()
+    private async Task GetFeedItems()
     {
-        var source = new List<FeedItem>();
-        var items = _cache.XPathSelectElements("//item");
+        var keys = ConfigurationManager.AppSettings.AllKeys.Where(key => key.StartsWith("feed:"));
+        var list = new List<SyndicationItem>();
 
-        foreach (XElement item in items.Take(_items))
+        foreach (var key in keys)
         {
-            string title = GetString(item, "title");
-            string content = GetString(item, "description");
-            Uri url = new Uri(GetString(item, "link"));
-            DateTime published = DateTime.Parse(GetString(item, "pubDate"));
-            string author = GetString(item, "author", "a community member");
+            using (WebClient client = new WebClient())
+            {
+                var stream = await client.OpenReadTaskAsync(ConfigurationManager.AppSettings.Get(key));
+                SyndicationFeed feed = SyndicationFeed.Load(XmlReader.Create(stream));
+                list.AddRange(feed.Items);
+            }
+        }
+
+        var sorted = list.OrderByDescending(i => i.PublishDate.Date).Take(_items);
+
+        rep.DataSource = ConvertToFeedItem(sorted);
+        rep.DataBind();
+    }
+
+    public static IEnumerable<FeedItem> ConvertToFeedItem(IEnumerable<SyndicationItem> items)
+    {
+        foreach (var item in items)
+        {
+            string author = item.Authors.Any() ? item.Authors[0].Name : string.Empty;
+            string content = item.Summary != null ? item.Summary.Text : item.Content.ToString();
 
             Regex regex = new Regex("<[^>]*>", RegexOptions.Compiled);
             content = regex.Replace(content, string.Empty);
             content = content.Substring(0, Math.Min(300, content.Length)) + "...";
 
-            source.Add(new FeedItem(title, content, author, url, published));
+            yield return new FeedItem(item.Title.Text, content, author, item.Links[0].Uri, item.PublishDate.Date);
         }
-
-        return source;
-    }
-
-    private static string GetString(XElement element, string name, string fallback = "")
-    {
-        var item = element.XPathSelectElement(name);
-
-        if (item != null && !string.IsNullOrEmpty(item.Value))
-            return item.Value;
-
-        return fallback;
     }
 }
