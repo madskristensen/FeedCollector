@@ -12,6 +12,7 @@ using System.Xml;
 public partial class _Default : Page
 {
     private static readonly int _items = int.Parse(ConfigurationManager.AppSettings.Get("visibleitems"));
+    private static Regex _regex = new Regex("<[^>]*>", RegexOptions.Compiled);
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -33,21 +34,22 @@ public partial class _Default : Page
             }
         }
 
-        var sorted = list.OrderByDescending(i => i.PublishDate.Date).Take(_items);
+        var sorted = list.OrderByDescending(i => i.PublishDate.Date);
 
-        rep.DataSource = ConvertToFeedItem(sorted);
+        rep.DataSource = ConvertToFeedItem(sorted).Take(_items);
         rep.DataBind();
     }
 
     public static IEnumerable<FeedItem> ConvertToFeedItem(IEnumerable<SyndicationItem> items)
     {
+        items = items.GroupBy(i => i.Title.Text).Select(i => i.First()); // Dedupes based on Title
+
         foreach (var item in items)
         {
             string author = item.Authors.Any() ? item.Authors[0].Name : string.Empty;
             string content = item.Summary != null ? item.Summary.Text : item.Content.ToString();
 
-            Regex regex = new Regex("<[^>]*>", RegexOptions.Compiled);
-            content = regex.Replace(content, string.Empty);
+            content = _regex.Replace(content, string.Empty);
             content = content.Substring(0, Math.Min(300, content.Length)) + "...";
 
             yield return new FeedItem(item.Title.Text, content, author, item.Links[0].Uri, item.PublishDate.Date);
