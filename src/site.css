@@ -21,6 +21,11 @@ div[role=main] {
     padding: 1em;
 }
 
+
+    div[role=main] > a {
+        float: right;
+    }
+
 article {
     position: relative;
     padding-left: 75px;
@@ -42,7 +47,6 @@ time {
     position: absolute;
     left: 0;
     top: 5px;
-    border-radius: 5px;
     border: 1px solid #333;
     text-align: center;
     width: 50px;
@@ -50,14 +54,13 @@ time {
 }
 
     time span {
-        padding: 3px;
+        padding: 3px 0;
         display: block;
     }
 
     time .month {
         background-color: darkcyan;
         color: white;
-        border-radius: 4px 4px 0 0;
     }
 
 footer p {
@@ -66,12 +69,12 @@ footer p {
     margin: 3em 0 0 0;
     background: #333;
     color: white;
-    line-height: 1.7
+    line-height: 1.7;
 }
 
-footer p a {
-    color: #fff;
-}
+    footer p a {
+        color: #fff;
+    }
 
 @media screen and (orientation: landscape) {
     @-ms-viewport {
