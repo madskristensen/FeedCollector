@@ -53,7 +53,7 @@ public partial class _Default : Page
             item.Summary = new TextSyndicationContent(content.Substring(0, Math.Min(300, content.Length)) + "...");
         }
 
-        CreateFeed(list);
+        CreateFeed(list.Take(_items));
     }
 
     private void CreateFeed(IEnumerable<SyndicationItem> list)
@@ -70,7 +70,7 @@ public partial class _Default : Page
     {
         using (XmlReader reader = XmlReader.Create(_file))
         {
-            return SyndicationFeed.Load(reader).Items.Take(_items);
+            return SyndicationFeed.Load(reader).Items;
         }
     }
 }
