@@ -70,7 +70,7 @@ public partial class _Default : Page
     {
         using (XmlReader reader = XmlReader.Create(_file))
         {
-            return SyndicationFeed.Load(reader).Items;
+            return SyndicationFeed.Load(reader).Items.Take(_items);
         }
     }
 }
