@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" Async="true" CodeFile="Default.aspx.cs" Inherits="_Default" %>
-<%@ OutputCache Duration="7200" VaryByParam="none" %>
+<%@ OutputCache CacheProfile="default" %>
 <%@ Import Namespace="System.Configuration" %>
 
 <!doctype html>
@@ -20,7 +20,7 @@
 
     <div role="main">
         <a href="/feed.rss">
-            <img src="rss.png" alt="Subscibe to the RSS feed" />
+            <img src="rss.png" height="32" width="32" alt="Subscibe to the RSS feed" />
         </a>
         <asp:Repeater runat="server" ID="rep" ItemType="System.ServiceModel.Syndication.SyndicationItem" SelectMethod="rep_GetData">
             <ItemTemplate>

@@ -27,6 +27,7 @@ div[role=main] {
     }
 
 article {
+    clear: both;
     position: relative;
     padding-left: 75px;
     margin-bottom: 2em;
