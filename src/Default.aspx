@@ -40,8 +40,7 @@
 
     <footer>
         <p>
-            <a href="http://github.com/madskristensen/webdevblogs">Contribute on GitHub</a><br />
-            Copyright &copy; <%=DateTime.Now.Year %> <a href="http://madskristensen.net" itemprop="accountablePerson" rel="me">Mads Kristensen</a>
+            <a href="http://github.com/madskristensen/webdevblogs">Contribute on GitHub</a>
         </p>
     </footer>
 </body>
