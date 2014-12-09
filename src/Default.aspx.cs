@@ -45,10 +45,18 @@ public partial class _Default : Page
 
     private async Task<SyndicationFeed> DownloadFeed(string url)
     {
-        using (WebClient client = new WebClient())
+        try
         {
-            var stream = await client.OpenReadTaskAsync(url);
-            return SyndicationFeed.Load(XmlReader.Create(stream));
+            using (WebClient client = new WebClient())
+            {
+                var stream = await client.OpenReadTaskAsync(url);
+                return SyndicationFeed.Load(XmlReader.Create(stream));
+            }
+        }
+        catch (Exception ex)
+        {
+            Trace.Warn("Feed", "Couldn't download: " + url, ex);
+            return new SyndicationFeed();
         }
     }
 

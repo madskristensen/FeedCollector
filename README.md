@@ -18,6 +18,7 @@ Every single setting is set through configuration in the web.config file, includ
 * The output caching policy
 * The number of posts to display
 * What to name the generated `feed.rss` file
+* Tracing for debugging purposes
 
 ## Deploy this app
 
