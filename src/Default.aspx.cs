@@ -15,9 +15,11 @@ public partial class _Default : Page
 {
     private static int _items = int.Parse(config.AppSettings["visibleitems"]);
     private static string _file = HostingEnvironment.MapPath(config.AppSettings["file"]);
+    protected int _page;
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        _page = int.Parse(Request.QueryString["page"] ?? "1");
         Task task = Task.Run(() => DownloadFeeds());
 
         if (!File.Exists(_file))
@@ -64,7 +66,7 @@ public partial class _Default : Page
     {
         using (XmlReader reader = XmlReader.Create(_file))
         {
-            var items = SyndicationFeed.Load(reader).Items.Take(_items);
+            var items = SyndicationFeed.Load(reader).Items.Skip((_page - 1) * _items).Take(_items);
             return items.Select(item =>
             {
                 string content = item.Summary != null ? item.Summary.Text : ((TextSyndicationContent)item.Content).Text;

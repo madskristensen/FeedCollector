@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" Async="true" CodeFile="Default.aspx.cs" Inherits="_Default" %>
+
 <%@ OutputCache CacheProfile="default" %>
 
 <!doctype html>
@@ -36,6 +37,13 @@
                 </article>
             </ItemTemplate>
         </asp:Repeater>
+
+        <div id="paging">
+                <a href="<%=_page + 1 %>" rel="previous">&lt; Prev</a>
+            <%if (_page > 1){%>
+                <a href="<%=_page == 2 ? "/" : _page - 1 + "" %>" rel="next">Next &gt;</a>
+            <%}%>
+        </div>
     </div>
 
     <footer>

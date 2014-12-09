@@ -61,6 +61,17 @@ time {
         color: white;
     }
 
+#paging {
+    text-align: center;
+    margin-top: 1em;
+}
+
+    #paging a {
+        text-decoration: none;
+        color: blue;
+        padding: 0 .5em;
+    }
+
 footer p {
     text-align: center;
     padding: 1.5em 0;
