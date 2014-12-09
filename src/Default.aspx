@@ -1,13 +1,12 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" Async="true" CodeFile="Default.aspx.cs" Inherits="_Default" %>
 <%@ OutputCache CacheProfile="default" %>
-<%@ Import Namespace="System.Configuration" %>
 
 <!doctype html>
 <html itemscope itemtype="http://schema.org/Blog">
 <head>
     <title><%:ConfigurationManager.AppSettings["title"]%></title>
     <link rel="stylesheet" href="site.css" />
-    <link rel="alternate" type="application/rss+xml" href="<%:ConfigurationManager.AppSettings["file"]%>" title="<%:ConfigurationManager.AppSettings["title"]%>" />
+    <link rel="alternate" type="application/rss+xml" href="<%:ConfigurationManager.AppSettings["file"]%>" />
     <meta charset="utf-8" />
     <meta name="description" content="<%:ConfigurationManager.AppSettings["description"]%>" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -20,9 +19,8 @@
     </header>
 
     <div role="main">
-        <a href="<%:ConfigurationManager.AppSettings["file"]%>" title="Subscribe">
-            <img src="rss.png" height="32" width="32" alt="Subscibe to the RSS feed" />
-        </a>
+        <a href="<%:ConfigurationManager.AppSettings["file"]%>" title="Subscribe" class="feed">Subscribe to the RSS feed</a>
+
         <asp:Repeater runat="server" ID="rep" ItemType="System.ServiceModel.Syndication.SyndicationItem" SelectMethod="GetData">
             <ItemTemplate>
                 <article itemscope itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
