@@ -3,38 +3,38 @@
 <%@ Import Namespace="System.Configuration" %>
 
 <!doctype html>
-<html>
+<html itemscope itemtype="http://schema.org/Blog">
 <head>
     <title><%:ConfigurationManager.AppSettings["title"]%></title>
-    <link href="site.css" rel="stylesheet" />
-    <link rel="alternate" type="application/rss+xml" href="/rss.xml" />
+    <link rel="stylesheet" href="site.css" />
+    <link rel="alternate" type="application/rss+xml" href="<%:ConfigurationManager.AppSettings["file"]%>" title="<%:ConfigurationManager.AppSettings["title"]%>" />
     <meta charset="utf-8" />
-    <meta name="description" content="News articles and videos from the ASP.NET and Visual Studio Web Team" />
+    <meta name="description" content="<%:ConfigurationManager.AppSettings["description"]%>" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 <body>
 
     <header role="banner">
-        <h1><%:ConfigurationManager.AppSettings["title"]%></h1>
+        <h1 itemprop="name"><%:ConfigurationManager.AppSettings["title"]%></h1>
+        <span itemprop="description"><%:ConfigurationManager.AppSettings["description"]%></span>
     </header>
 
     <div role="main">
-        <a href="/feed.rss">
+        <a href="<%:ConfigurationManager.AppSettings["file"]%>" title="Subscribe">
             <img src="rss.png" height="32" width="32" alt="Subscibe to the RSS feed" />
         </a>
         <asp:Repeater runat="server" ID="rep" ItemType="System.ServiceModel.Syndication.SyndicationItem" SelectMethod="GetData">
             <ItemTemplate>
-                <article>
-                    <time datetime="<%# Item.PublishDate.ToString("yyyy-MM-dd HH:mm") %>">
+                <article itemscope itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
+                    <time itemprop="datePublished" datetime="<%# Item.PublishDate.ToString("yyyy-MM-dd HH:mm") %>">
                         <span class="month"><%# Item.PublishDate.ToString("MMM") %></span>
                         <span class="day"><%# Item.PublishDate.Day %></span>
                     </time>
 
-                    <h2><%# Item.Title.Text %></h2>
-                    <p><%# Item.Summary.Text %></p>
+                    <h2 itemprop="name"><%# Item.Title.Text %></h2>
+                    <p itemprop="articleBody"><%# Item.Summary.Text %></p>
 
-                    <a href="<%# Item.Links[0].Uri %>">Read the article</a>
-                    <em style="background-image: url('<%#Item.Links[0].Uri.Scheme + "://" + Item.Links[0].Uri.Host + "/favicon.ico" %>')"></em>
+                    <a itemprop="url" href="<%# Item.Links[0].Uri %>" title="<%#: Item.Title.Text %>">Read the article</a>
                 </article>
             </ItemTemplate>
         </asp:Repeater>
@@ -43,7 +43,7 @@
     <footer>
         <p>
             <a href="http://github.com/madskristensen/webdevblogs">Contribute on GitHub</a><br />
-            Copyright &copy; <%=DateTime.Now.Year %> <a href="http://madskristensen.net" rel="me">Mads Kristensen</a>
+            Copyright &copy; <%=DateTime.Now.Year %> <a href="http://madskristensen.net" itemprop="accountablePerson" rel="me">Mads Kristensen</a>
         </p>
     </footer>
 </body>

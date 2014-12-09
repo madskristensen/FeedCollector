@@ -14,8 +14,7 @@ using config = System.Configuration.ConfigurationManager;
 public partial class _Default : Page
 {
     private static int _items = int.Parse(config.AppSettings["visibleitems"]);
-    private static string _file = HostingEnvironment.MapPath("~/feed.rss");
-    private static Regex _regex = new Regex("<[^>]*>", RegexOptions.Compiled);
+    private static string _file = HostingEnvironment.MapPath(config.AppSettings["file"]);
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -27,26 +26,21 @@ public partial class _Default : Page
 
     private async Task DownloadFeeds()
     {
-        var keys = config.AppSettings.AllKeys.Where(key => key.StartsWith("feed:"));
         var list = new List<SyndicationItem>();
 
-        foreach (var key in keys)
+        foreach (var key in config.AppSettings.AllKeys.Where(key => key.StartsWith("feed:")))
         {
             SyndicationFeed feed = await DownloadFeed(config.AppSettings[key]);
-
-            foreach (SyndicationItem item in feed.Items)
-            {
-                string content = item.Summary != null ? item.Summary.Text : ((TextSyndicationContent)item.Content).Text;
-                content = _regex.Replace(content, string.Empty); // Strips out HTML
-
-                item.Summary = new TextSyndicationContent(content.Substring(0, Math.Min(300, content.Length)) + "...");
-
-                if (!list.Any(i => i.Title.Text.Equals(item.Title.Text, StringComparison.OrdinalIgnoreCase)))
-                    list.Add(item);
-            }
+            list.AddRange(feed.Items);
         }
 
-        CreateFeed(list.OrderByDescending(i => i.PublishDate.Date));
+        // Dedupe and order list of items
+        var ordered = list.GroupBy(i => i.Title.Text).Select(i => i.First()).OrderByDescending(i => i.PublishDate.Date);
+
+        SyndicationFeed rss = new SyndicationFeed(config.AppSettings["title"], config.AppSettings["description"], null, ordered);
+
+        using (XmlWriter writer = XmlWriter.Create(_file))
+            rss.SaveAsRss20(writer);
     }
 
     private async Task<SyndicationFeed> DownloadFeed(string url)
@@ -58,21 +52,18 @@ public partial class _Default : Page
         }
     }
 
-    private void CreateFeed(IEnumerable<SyndicationItem> list)
-    {
-        SyndicationFeed rss = new SyndicationFeed(config.AppSettings["title"], config.AppSettings["description"], null, list);
-
-        using (XmlWriter writer = XmlWriter.Create(_file, new XmlWriterSettings { Indent = true }))
-        {
-            rss.SaveAsRss20(writer);
-        }
-    }
-
     public IEnumerable<SyndicationItem> GetData()
     {
         using (XmlReader reader = XmlReader.Create(_file))
         {
-            return SyndicationFeed.Load(reader).Items;
+            var items = SyndicationFeed.Load(reader).Items.Take(_items);
+            return items.Select(item =>
+            {
+                string content = item.Summary != null ? item.Summary.Text : ((TextSyndicationContent)item.Content).Text;
+                content = Regex.Replace(content, "<[^>]*>", string.Empty); // Strips out HTML
+                item.Summary = new TextSyndicationContent(content.Substring(0, Math.Min(300, content.Length)) + "...");
+                return item;
+            });
         }
     }
 }
