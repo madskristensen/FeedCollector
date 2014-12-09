@@ -22,7 +22,7 @@
         <a href="/feed.rss">
             <img src="rss.png" height="32" width="32" alt="Subscibe to the RSS feed" />
         </a>
-        <asp:Repeater runat="server" ID="rep" ItemType="System.ServiceModel.Syndication.SyndicationItem" SelectMethod="rep_GetData">
+        <asp:Repeater runat="server" ID="rep" ItemType="System.ServiceModel.Syndication.SyndicationItem" SelectMethod="GetData">
             <ItemTemplate>
                 <article>
                     <time datetime="<%# Item.PublishDate.ToString("yyyy-MM-dd HH:mm") %>">

@@ -32,28 +32,30 @@ public partial class _Default : Page
 
         foreach (var key in keys)
         {
-            using (WebClient client = new WebClient())
+            SyndicationFeed feed = await DownloadFeed(config.AppSettings[key]);
+
+            foreach (SyndicationItem item in feed.Items)
             {
-                var stream = await client.OpenReadTaskAsync(config.AppSettings[key]);
-                SyndicationFeed feed = SyndicationFeed.Load(XmlReader.Create(stream));
-                list.AddRange(feed.Items);
+                string content = item.Summary != null ? item.Summary.Text : ((TextSyndicationContent)item.Content).Text;
+                content = _regex.Replace(content, string.Empty); // Strips out HTML
+
+                item.Summary = new TextSyndicationContent(content.Substring(0, Math.Min(300, content.Length)) + "...");
+
+                if (!list.Any(i => i.Title.Text.Equals(item.Title.Text, StringComparison.OrdinalIgnoreCase)))
+                    list.Add(item);
             }
         }
 
-        // Dedupe and order list of items
-        list = list.GroupBy(i => i.Title.Text).Select(i => i.First()).OrderByDescending(i => i.PublishDate.Date).ToList();
+        CreateFeed(list.OrderByDescending(i => i.PublishDate.Date));
+    }
 
-        foreach (SyndicationItem item in list)
+    private async Task<SyndicationFeed> DownloadFeed(string url)
+    {
+        using (WebClient client = new WebClient())
         {
-            string author = item.Authors.Any() ? item.Authors[0].Name : string.Empty;
-            string content = item.Summary != null ? item.Summary.Text : item.Content.ToString();
-            content = _regex.Replace(content, string.Empty); // Strips out HTML
-
-            item.Authors.Add(new SyndicationPerson(null, author, null));
-            item.Summary = new TextSyndicationContent(content.Substring(0, Math.Min(300, content.Length)) + "...");
+            var stream = await client.OpenReadTaskAsync(url);
+            return SyndicationFeed.Load(XmlReader.Create(stream));
         }
-
-        CreateFeed(list.Take(_items));
     }
 
     private void CreateFeed(IEnumerable<SyndicationItem> list)
@@ -66,7 +68,7 @@ public partial class _Default : Page
         }
     }
 
-    public IEnumerable<SyndicationItem> rep_GetData()
+    public IEnumerable<SyndicationItem> GetData()
     {
         using (XmlReader reader = XmlReader.Create(_file))
         {
