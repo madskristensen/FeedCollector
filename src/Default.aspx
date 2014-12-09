@@ -5,11 +5,11 @@
 <html itemscope itemtype="http://schema.org/Blog">
 <head>
     <title><%:ConfigurationManager.AppSettings["title"]%></title>
-    <link rel="stylesheet" href="site.css" />
-    <link rel="alternate" type="application/rss+xml" href="<%:ConfigurationManager.AppSettings["file"]%>" />
     <meta charset="utf-8" />
     <meta name="description" content="<%:ConfigurationManager.AppSettings["description"]%>" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="site.css" />
+    <link rel="alternate" type="application/rss+xml" href="<%:ConfigurationManager.AppSettings["file"]%>" />
 </head>
 <body>
 
