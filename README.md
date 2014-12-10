@@ -1,4 +1,4 @@
-# Feed Collector website
+# Feed Collector
 
 [![Build status](https://ci.appveyor.com/api/projects/status/l9ylstqm84xkjl3f?svg=true)](https://ci.appveyor.com/project/madskristensen/webdevblogs)
 
