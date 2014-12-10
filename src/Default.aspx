@@ -1,5 +1,4 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" Async="true" CodeFile="Default.aspx.cs" Inherits="_Default" %>
-
 <%@ OutputCache CacheProfile="default" %>
 
 <!doctype html>
