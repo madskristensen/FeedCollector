@@ -9,8 +9,8 @@
     <meta charset="utf-8" />
     <meta name="description" content="<%:ConfigurationManager.AppSettings["description"]%>" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="site.css" />
-    <link rel="alternate" type="application/rss+xml" href="<%:ConfigurationManager.AppSettings["file"]%>" />
+    <link rel="stylesheet" href="themes/<%:ConfigurationManager.AppSettings["theme"]%>/site.css" />
+    <link rel="alternate" type="application/rss+xml" href="feed.rss" />
 </head>
 <body>
 
@@ -22,7 +22,7 @@
     </header>
 
     <div role="main">
-        <a href="<%:ConfigurationManager.AppSettings["file"]%>" title="Subscribe" class="feed">Subscribe to the RSS feed</a>
+        <a href="feed.rss" title="Subscribe" class="feed">Subscribe to the RSS feed</a>
 
         <asp:Repeater runat="server" ID="rep" ItemType="System.ServiceModel.Syndication.SyndicationItem" SelectMethod="GetData">
             <ItemTemplate>

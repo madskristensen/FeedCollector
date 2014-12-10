@@ -1,8 +1,8 @@
-# ASP.NET and Web Tools News
+# Feed Collector website
 
 [![Build status](https://ci.appveyor.com/api/projects/status/l9ylstqm84xkjl3f?svg=true)](https://ci.appveyor.com/project/madskristensen/webdevblogs)
 
-Website: [webdevblogs.azurewebsites.net](http://webdevblogs.azurewebsites.net/)
+Demo: [webdevblogs.azurewebsites.net](http://webdevblogs.azurewebsites.net/)
 
 Keep yourself up to speed with everything ASP.NET and Visual Studio web tooling.
 
@@ -17,7 +17,6 @@ Every single setting is set through configuration in the web.config file, includ
 * The name and description
 * The output caching policy
 * The number of posts to display
-* What to name the generated `feed.rss` file
 * Tracing for debugging purposes
 
 ## Deploy this app

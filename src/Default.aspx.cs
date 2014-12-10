@@ -13,7 +13,7 @@ using config = System.Configuration.ConfigurationManager;
 
 public partial class _Default : Page
 {
-    private static string _file = HostingEnvironment.MapPath(config.AppSettings["file"]);
+    private static string _file = HostingEnvironment.MapPath("~/feed.rss");
     protected int _page;
 
     protected void Page_Load(object sender, EventArgs e)
