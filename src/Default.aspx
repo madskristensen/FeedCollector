@@ -49,7 +49,7 @@
     </div>
 
     <footer role="contentinfo">
-        <p>Powered by <a href="http://github.com/madskristensen/FeedCollector">FeedCollector</a></p>
+        <p>Powered by <a href="http://github.com/madskristensen/FeedCollector">Feed Collector</a></p>
     </footer>
 </body>
 </html>

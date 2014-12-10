@@ -4,10 +4,17 @@
 
 Demo: [webdevblogs.azurewebsites.net](http://webdevblogs.azurewebsites.net/)
 
-Keep yourself up to speed with everything ASP.NET and Visual Studio web tooling.
+Feed Collector is a single-page feed aggregating website that allows you to combine
+multiple RSS/Atom feeds into a single feed and display them nicely on a web page.
 
-This website aggregates the activities such as blog posts, Youtube videos an more from the
-ASP.NET and Web Tools team.
+The features include:
+
+* Add as many RSS/Atom feeds as you'd like
+* A combined RSS feed is generated and exposed
+* Paging support
+* Themes lets you customize the web page
+* Easy to deploy to any IIS server
+* Best practices for performance and accessibility
 
 ## Theming
 
