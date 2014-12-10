@@ -15,7 +15,7 @@ You can customize the look and feel of the website using themes. The `default` t
 is selected by default, but you can add others by dropping in a CSS file to the `themes`
 folder.
 
-## 100% configurable
+## Configurable
 
 Every single setting is set through configuration in the web.config file, including:
 
