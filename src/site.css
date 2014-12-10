@@ -20,7 +20,7 @@ header {
 }
 
 header a {
-    color: black;
+    color: #000;
     text-decoration: none;
 }
 
@@ -63,7 +63,7 @@ time {
 
     time .month {
         background-color: darkcyan;
-        color: white;
+        color: #fff;
     }
 
 #paging {
@@ -81,6 +81,7 @@ footer p {
     padding: 1.5em 0;
     margin: 3em 0 0 0;
     background: #333;
+    color: #fff;
 }
 
     footer p a {

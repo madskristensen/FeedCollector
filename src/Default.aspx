@@ -49,7 +49,7 @@
     </div>
 
     <footer role="contentinfo">
-        <p><a href="http://github.com/madskristensen/webdevblogs">Contribute on GitHub</a></p>
+        <p>Powered by <a href="http://github.com/madskristensen/FeedCollector">FeedCollector</a></p>
     </footer>
 </body>
 </html>
