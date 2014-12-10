@@ -69,7 +69,7 @@ public partial class _Default : Page
     private static void CleanItem(SyndicationItem item)
     {
         string summary = item.Summary != null ? item.Summary.Text : ((TextSyndicationContent)item.Content).Text;
-        summary = Regex.Replace(summary, "<[^>]*>", string.Empty); // Strips out HTML
-        item.Summary = new TextSyndicationContent(summary.Substring(0, Math.Min(300, summary.Length)) + "...");
+        summary = Regex.Replace(summary, "<[^>]*>", ""); // Strips out HTML
+        item.Summary = new TextSyndicationContent(string.Join("", summary.Take(300)) + "...");
     }
 }
