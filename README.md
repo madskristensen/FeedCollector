@@ -9,6 +9,12 @@ Keep yourself up to speed with everything ASP.NET and Visual Studio web tooling.
 This website aggregates the activities such as blog posts, Youtube videos an more from the
 ASP.NET and Web Tools team.
 
+## Theming
+
+You can customize the look and feel of the website using themes. The `default` theme
+is selected by default, but you can add others by dropping in a CSS file to the `themes`
+folder.
+
 ## 100% configurable
 
 Every single setting is set through configuration in the web.config file, including:
