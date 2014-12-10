@@ -3,7 +3,7 @@
 <%@ OutputCache CacheProfile="default" %>
 
 <!doctype html>
-<html itemscope itemtype="http://schema.org/Blog">
+<html lang="en" itemscope itemtype="http://schema.org/Blog">
 <head>
     <title><%:ConfigurationManager.AppSettings["title"]%></title>
     <meta charset="utf-8" />
