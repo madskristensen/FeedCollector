@@ -35,7 +35,7 @@
                     <h2 itemprop="name"><%# Item.Title.Text %></h2>
                     <p itemprop="articleBody"><%# Item.Summary.Text %></p>
 
-                    <a itemprop="url" href="<%# Item.Links[0].Uri %>" title="<%#: Item.Title.Text %>">Read the article</a>
+                    <a itemprop="url" href="<%#: Item.Links[0].Uri %>" title="<%#: Item.Title.Text %>">Read the article</a>
                 </article>
             </ItemTemplate>
         </asp:Repeater>
