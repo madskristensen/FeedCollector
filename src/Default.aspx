@@ -15,7 +15,9 @@
 <body>
 
     <header role="banner">
-        <h1 itemprop="name"><%:ConfigurationManager.AppSettings["title"]%></h1>
+        <a href="~/" runat="server">
+            <h1 itemprop="name"><%:ConfigurationManager.AppSettings["title"]%></h1>
+        </a>
         <span itemprop="description"><%:ConfigurationManager.AppSettings["description"]%></span>
     </header>
 
@@ -39,17 +41,15 @@
         </asp:Repeater>
 
         <div id="paging">
-                <a href="<%=_page + 1 %>" rel="previous">&lt; Prev</a>
+            <a href="<%=_page + 1 %>" rel="previous">&lt; Older</a>
             <%if (_page > 1){%>
-                <a href="<%=_page == 2 ? "/" : _page - 1 + "" %>" rel="next">Next &gt;</a>
+                <a href="<%=_page == 2 ? "/" : _page - 1 + "" %>" rel="next">Newer &gt;</a>
             <%}%>
         </div>
     </div>
 
-    <footer>
-        <p>
-            <a href="http://github.com/madskristensen/webdevblogs">Contribute on GitHub</a>
-        </p>
+    <footer role="contentinfo">
+        <p><a href="http://github.com/madskristensen/webdevblogs">Contribute on GitHub</a></p>
     </footer>
 </body>
 </html>

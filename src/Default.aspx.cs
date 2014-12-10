@@ -13,7 +13,6 @@ using config = System.Configuration.ConfigurationManager;
 
 public partial class _Default : Page
 {
-    private static int _items = int.Parse(config.AppSettings["visibleitems"]);
     private static string _file = HostingEnvironment.MapPath(config.AppSettings["file"]);
     protected int _page;
 
@@ -28,18 +27,13 @@ public partial class _Default : Page
 
     private async Task DownloadFeeds()
     {
-        var list = new List<SyndicationItem>();
+        var rss = new SyndicationFeed(config.AppSettings["title"], config.AppSettings["description"], null);
 
         foreach (var key in config.AppSettings.AllKeys.Where(key => key.StartsWith("feed:")))
         {
             SyndicationFeed feed = await DownloadFeed(config.AppSettings[key]);
-            list.AddRange(feed.Items);
+            rss.Items = rss.Items.Union(feed.Items).GroupBy(i => i.Title.Text).Select(i => i.First()).OrderByDescending(i => i.PublishDate.Date);
         }
-
-        // Dedupe and order list of items
-        var ordered = list.GroupBy(i => i.Title.Text).Select(i => i.First()).OrderByDescending(i => i.PublishDate.Date);
-
-        SyndicationFeed rss = new SyndicationFeed(config.AppSettings["title"], config.AppSettings["description"], null, ordered);
 
         using (XmlWriter writer = XmlWriter.Create(_file))
             rss.SaveAsRss20(writer);
@@ -66,14 +60,16 @@ public partial class _Default : Page
     {
         using (XmlReader reader = XmlReader.Create(_file))
         {
-            var items = SyndicationFeed.Load(reader).Items.Skip((_page - 1) * _items).Take(_items);
-            return items.Select(item =>
-            {
-                string content = item.Summary != null ? item.Summary.Text : ((TextSyndicationContent)item.Content).Text;
-                content = Regex.Replace(content, "<[^>]*>", string.Empty); // Strips out HTML
-                item.Summary = new TextSyndicationContent(content.Substring(0, Math.Min(300, content.Length)) + "...");
-                return item;
-            });
+            var count = int.Parse(config.AppSettings["visibleitems"]);
+            var items = SyndicationFeed.Load(reader).Items.Skip((_page - 1) * count).Take(count);
+            return items.Select(item => { CleanItem(item); return item; });
         }
+    }
+
+    private static void CleanItem(SyndicationItem item)
+    {
+        string summary = item.Summary != null ? item.Summary.Text : ((TextSyndicationContent)item.Content).Text;
+        summary = Regex.Replace(summary, "<[^>]*>", string.Empty); // Strips out HTML
+        item.Summary = new TextSyndicationContent(summary.Substring(0, Math.Min(300, summary.Length)) + "...");
     }
 }
