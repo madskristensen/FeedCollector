@@ -60,7 +60,7 @@ public partial class _Default : Page
     {
         using (XmlReader reader = XmlReader.Create(_file))
         {
-            var count = int.Parse(config.AppSettings["visibleitems"]);
+            var count = int.Parse(config.AppSettings["postsPerPage"]);
             var items = SyndicationFeed.Load(reader).Items.Skip((_page - 1) * count).Take(count);
             return items.Select(item => { CleanItem(item); return item; });
         }
