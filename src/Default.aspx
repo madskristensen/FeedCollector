@@ -48,7 +48,7 @@
 	</div>
 
 	<footer role="contentinfo">
-		<p>Powered by <a href="http://github.com/madskristensen/FeedCollector">Feed Collector</a></p>
+		<p>Powered by <a href="https://github.com/madskristensen/FeedCollector">Feed Collector</a></p>
 	</footer>
 </body>
 </html>
