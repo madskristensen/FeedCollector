@@ -51,7 +51,7 @@ public partial class _Default : Page
         }
         catch (Exception ex)
         {
-            Trace.Warn("Feed", "Couldn't download: " + url, ex);
+            Trace.Warn("Feed Collector", "Couldn't download: " + url, ex);
             return new SyndicationFeed();
         }
     }
