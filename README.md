@@ -15,6 +15,7 @@ The features include:
 * Themes lets you customize the web page
 * Easy to deploy to any IIS server
 * Best practices for performance and accessibility
+* Optimized for both mobile and desktop
 
 ## Theming
 
