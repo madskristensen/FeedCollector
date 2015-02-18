@@ -21,7 +21,7 @@
 	</header>
 
 	<div role="main">
-		<a href="feed.xml" title="Subscribe" class="feed">Subscribe to the RSS feed</a>
+		<a href="feed.xml" title="Subscribe to the RSS feed" class="feed">Subscribe</a>
 
 		<asp:Repeater runat="server" ID="rep" ItemType="System.ServiceModel.Syndication.SyndicationItem" SelectMethod="GetData">
 			<ItemTemplate>

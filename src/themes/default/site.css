@@ -56,20 +56,23 @@ time {
     position: absolute;
     left: 0;
     top: 5px;
-    border: 1px solid #333;
     text-align: center;
     width: 50px;
-    font-weight: bold;
 }
 
     time span {
-        padding: 3px 0;
+        padding: 2px 0;
         display: block;
     }
 
     time .month {
-        background-color: darkcyan;
+        border-radius: 2px 2px 0 0;
+        background-color: #752767;
         color: #fff;
+    }
+
+    time .day{
+        font-weight: bold;
     }
 
 #paging {
