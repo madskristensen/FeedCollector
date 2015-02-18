@@ -30,9 +30,8 @@
 						<span class="month"><%# Item.PublishDate.ToString("MMM") %></span>
 						<span class="day"><%# Item.PublishDate.Day %></span>
 					</time>
-					<a itemprop="url" href="<%#: Item.Links[0].Uri %>">
-						<h2 itemprop="name"><%# Item.Title.Text %></h2>
-					</a>
+
+					<h2 itemprop="name"><a itemprop="url" href="<%#: Item.Links[0].Uri %>"><%# Item.Title.Text %></a></h2>
 					<p itemprop="articleBody"><%# Item.Summary.Text %></p>
 
 					<a itemprop="url" href="<%#: Item.Links[0].Uri %>" title="<%#: Item.Title.Text %>">Read the article</a>

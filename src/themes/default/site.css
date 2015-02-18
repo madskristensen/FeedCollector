@@ -16,6 +16,11 @@ h2 {
     margin: 0;
 }
 
+h2 a {
+    color: inherit;
+    text-decoration: none;
+}
+
 header {
     text-align: center;
     font-size: 1.3em;
