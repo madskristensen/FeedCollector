@@ -1,5 +1,5 @@
 ﻿body {
-    font: 16px/1.5em "Segoe UI","Segoe WP Light","Segoe WP",Tahoma,Arial,sans-serif;
+    font: 16px/1.3em "Segoe UI","Segoe WP Light","Segoe WP",Tahoma,Arial,sans-serif;
     margin: 0;
     color: #505050;
     background: #fff;
@@ -45,7 +45,7 @@ article {
     clear: both;
     position: relative;
     padding-left: 75px;
-    margin-bottom: 2em;
+    margin-bottom: 2.5em;
 }
 
     article p {
