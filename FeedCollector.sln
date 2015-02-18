@@ -3,10 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "FeedCollector", "http://localhost:40446", "{6B265B7D-97E2-4DB5-880D-EDB8BC71D2D9}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "src(6)", "http://localhost:40446", "{6B265B7D-97E2-4DB5-880D-EDB8BC71D2D9}"
 	ProjectSection(WebsiteProperties) = preProject
 		UseIISExpress = "true"
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5.3"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_40446"
 		Debug.AspNetCompiler.PhysicalPath = "src\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_40446\"

@@ -13,7 +13,8 @@ using config = System.Configuration.ConfigurationManager;
 
 public partial class _Default : Page
 {
-    private static string _file = HostingEnvironment.MapPath("~/feed.xml");
+    private static string _masterFile = HostingEnvironment.MapPath("~/master.xml");
+    private static string _feedFile = HostingEnvironment.MapPath("~/feed.xml");
     protected int _page;
 
     protected void Page_Load(object sender, EventArgs e)
@@ -21,7 +22,7 @@ public partial class _Default : Page
         _page = int.Parse(Request.QueryString["page"] ?? "1");
         Task task = Task.Run(() => DownloadFeeds());
 
-        if (!File.Exists(_file))
+        if (!File.Exists(_masterFile))
             task.Wait();
     }
 
@@ -35,8 +36,14 @@ public partial class _Default : Page
             rss.Items = rss.Items.Union(feed.Items).GroupBy(i => i.Title.Text).Select(i => i.First()).OrderByDescending(i => i.PublishDate.Date);
         }
 
-        using (XmlWriter writer = XmlWriter.Create(_file))
+        using (XmlWriter writer = XmlWriter.Create(_masterFile))
             rss.SaveAsRss20(writer);
+
+        using (XmlWriter writer = XmlWriter.Create(_feedFile))
+        {
+            rss.Items = rss.Items.Take(10);
+            rss.SaveAsRss20(writer);
+        }
     }
 
     private async Task<SyndicationFeed> DownloadFeed(string url)
@@ -58,7 +65,7 @@ public partial class _Default : Page
 
     public IEnumerable<SyndicationItem> GetData()
     {
-        using (XmlReader reader = XmlReader.Create(_file))
+        using (XmlReader reader = XmlReader.Create(_masterFile))
         {
             var count = int.Parse(config.AppSettings["postsPerPage"]);
             var items = SyndicationFeed.Load(reader).Items.Skip((_page - 1) * count).Take(count);
