@@ -7,7 +7,7 @@
 
 h1, h2{
     font-family: "Segoe UI Light","Segoe WP Light","Segoe UI","Segoe WP",Tahoma,Arial,sans-serif;
-	font-weight: 600;
+	font-weight: 400;
 	margin: 25px 0;
 }
 
@@ -22,12 +22,21 @@ h2 a {
 }
 
 header {
-    text-align: center;
-    font-size: 1.3em;
+    text-align: left;
+    height: 60px;
+    line-height: 60px;
+    background: #68217a;
+}
+
+header h1{
+    font-size: 22px;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 1em;
 }
 
     header a {
-        color: #000;
+        color: #fff;
         text-decoration: none;
     }
 
@@ -35,6 +44,10 @@ div[role=main] {
     max-width: 960px;
     margin: 0 auto;
     padding: 1em;
+}
+
+span[itemprop=description] {
+    font-size: 1.2em;
 }
 
 .feed {

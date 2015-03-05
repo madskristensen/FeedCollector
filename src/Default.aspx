@@ -17,12 +17,11 @@
 		<a href="~/" runat="server">
 			<h1 itemprop="name"><%:ConfigurationManager.AppSettings["title"]%></h1>
 		</a>
-		<span itemprop="description"><%:ConfigurationManager.AppSettings["description"]%></span>
 	</header>
 
 	<div role="main">
 		<a href="feed.xml" title="Subscribe to the RSS feed" class="feed">Subscribe</a>
-
+        
 		<asp:Repeater runat="server" ID="rep" ItemType="System.ServiceModel.Syndication.SyndicationItem" SelectMethod="GetData">
 			<ItemTemplate>
 				<article itemscope itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
